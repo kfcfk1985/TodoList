@@ -18,6 +18,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+//加载 models 中 的表格到 db 对象中
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -27,7 +28,8 @@ fs
   })
   .forEach(file => {
 
-    //见：https://sequelize.org/v5/manual/models-definition.html#import
+    //加载todo.js 以便定义数据库的table
+    //原理见：https://sequelize.org/v5/manual/models-definition.html#import
     const model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
